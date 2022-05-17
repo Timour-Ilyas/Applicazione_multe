@@ -4,11 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1775" />
+        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1775" />
         <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1775" />
-        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/activity_fai_multa.xml" value="0.264" />
-        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/activity_lista_multe.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/drawable/intestazione.xml" value="0.1775" />
+        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/drawable/rotella.xml" value="0.1775" />
+        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/activity_fai_multa.xml" value="0.362555720653789" />
+        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/activity_impostazioni.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/activity_info.xml" value="0.264" />
+        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/activity_lista_multe.xml" value="0.1" />
         <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/activity_menu_principale.xml" value="0.264" />
+        <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/activity_recupero_credenziali.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/spinner.xml" value="0.16822916666666668" />
         <entry key="..\:/Users/XiroD/OneDrive/Documents/Coding/JavaAndroidStudio/Caramba/app/src/main/res/layout/spinner_scroll.xml" value="0.16822916666666668" />
       </map>

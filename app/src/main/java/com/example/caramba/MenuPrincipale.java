@@ -6,10 +6,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MenuPrincipale extends AppCompatActivity {
     private Button pulsanteFaiMulte, pulsanteListaMulte;
-
+    private ImageButton impostazioniButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,9 +18,16 @@ public class MenuPrincipale extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_principale);
 
-        pulsanteFaiMulte = findViewById(R.id.PulsanteFaiMulte);
-        pulsanteListaMulte = findViewById(R.id.PulsanteListaMulte);
+        impostazioniButton = findViewById(R.id.impostazioniButton);
+        impostazioniButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),Impostazioni.class);
+                startActivity(i);
+            }
+        });
 
+        pulsanteFaiMulte = findViewById(R.id.PulsanteFaiMulte);
         pulsanteFaiMulte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,6 +36,7 @@ public class MenuPrincipale extends AppCompatActivity {
             }
         });
 
+        pulsanteListaMulte = findViewById(R.id.PulsanteListaMulte);
         pulsanteListaMulte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

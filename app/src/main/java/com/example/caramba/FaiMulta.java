@@ -30,23 +30,21 @@ import java.util.Random;
 public class FaiMulta extends AppCompatActivity {
     private Button pulsanteConferma;
 
-    private final EditText[] tuttiCampi = new EditText[3];
+    private final Random randomGenerator = new Random();
+
+    private final EditText[] tuttiCampi = new EditText[4];
     private Spinner spinner;
 
     private static String[] effrazioni;
 
-    private final String url = "http://pagu.ddns.net/api.php";
     private RequestQueue requestQueue;
-
-    private String idGenerato = "";
-
-    private final Random randomGenerator = new Random();
 
     private int giorno;
     private int mese;
     private int anno;
     private int ora;
     private int minuti;
+    private String orario;
     private String dataInserita;
     DatePickerDialog.OnDateSetListener setListener;
     private DatePickerDialog dpd;
@@ -66,6 +64,7 @@ public class FaiMulta extends AppCompatActivity {
         tuttiCampi[0] = findViewById(R.id.campoTarga);
         tuttiCampi[1] = findViewById(R.id.campoLuogo);
         tuttiCampi[2] = findViewById(R.id.campoCosto);
+        tuttiCampi[3] = findViewById(R.id.campoCoordinate);
 
         dataPicker = findViewById(R.id.tv_date);
         Calendar calendar = Calendar.getInstance();
@@ -116,43 +115,64 @@ public class FaiMulta extends AppCompatActivity {
         pulsanteConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tuttiCampi[0].getText().toString().length() <= 7) {
+                if(!Impostazioni.accessoFantasmagorico) {
+                    /*
+                     *
+                     */
+                    if (tuttiCampi[0].getText().toString().trim().length() <= 7 && tuttiCampi[0].getText().toString().trim().length() > 0
+                            && tuttiCampi[1].getText().toString().trim().length() >0 && tuttiCampi[2].getText().toString().trim().length() >0
+                            &&  tuttiCampi[3].getText().toString().trim().length() > 0) {
 
-                    //Controllo che le credenziali siano corrette
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                            response -> Toast.makeText(FaiMulta.this, "Successo", Toast.LENGTH_LONG).show(),
-                            error -> Toast.makeText(FaiMulta.this, "Errore", Toast.LENGTH_LONG).show()) {
+                        //Controllo che le credenziali siano corrette
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, MainActivity.url,
+                                response -> Toast.makeText(FaiMulta.this, "Successo", Toast.LENGTH_LONG).show(),
+                                error -> Toast.makeText(FaiMulta.this, "Errore", Toast.LENGTH_LONG).show()) {
+                            String numeroGenerato = Integer.toString(randomGenerator.nextInt(2000000)).trim();
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<>();
+                                params.put("function", "inserisciMulta");
+                                params.put("token", MainActivity.token);
+                                params.put("codiceMatricola", MainActivity.codiceMatricola);
+                                params.put("idMulta", numeroGenerato);
 
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<>();
-                            params.put("function", "inserisciMulta");
-                            params.put("token", MainActivity.token);
-                            params.put("codiceMatricola", MainActivity.codiceMatricola);
+                                params.put("nomeViolazione", spinner.getSelectedItem().toString().trim());
+                                params.put("costoViolazione", tuttiCampi[2].getText().toString().trim());
 
-                            params.put("nomeViolazione", spinner.getSelectedItem().toString().trim());
-                            params.put("costoViolazione", tuttiCampi[2].getText().toString().trim());
+                                params.put("targa", tuttiCampi[0].getText().toString().trim().toUpperCase());
+                                params.put("data", anno + "-" + mese + "-" + giorno);
+                                params.put("oraMulta", orario);
+                                params.put("luogo", tuttiCampi[1].getText().toString().trim());
+                                params.put("coordinate", tuttiCampi[3].getText().toString().trim());
 
-                            int valoreGenerato = randomGenerator.nextInt(999999);
-                            idGenerato = Integer.toString(valoreGenerato);
+                                System.out.println("Stampa");
+                                System.out.println(MainActivity.token);
+                                System.out.println(MainActivity.codiceMatricola);
+                                System.out.println(numeroGenerato);
+                                System.out.println(spinner.getSelectedItem().toString().trim());
+                                System.out.println(tuttiCampi[2].getText().toString().trim());
+                                System.out.println(tuttiCampi[0].getText().toString().trim().toUpperCase());
+                                System.out.println(anno + "-" + mese + "-" + giorno);
+                                System.out.println(orario);
+                                System.out.println(tuttiCampi[1].getText().toString().trim());
+                                System.out.println(tuttiCampi[3].getText().toString().trim());
 
-                            params.put("idMulta", idGenerato);
-                            params.put("targa", tuttiCampi[0].getText().toString().trim().toUpperCase());
-                            params.put("data", anno + "-" + mese + "-" + giorno);
-                            params.put("luogo", tuttiCampi[1].getText().toString().trim());
+                                return params;
+                            }
+                        };
 
-                            return params;
-                        }
-                    };
+                        requestQueue = Volley.newRequestQueue(FaiMulta.this);
+                        requestQueue.add(stringRequest);
 
-                    requestQueue = Volley.newRequestQueue(FaiMulta.this);
-                    requestQueue.add(stringRequest);
-
-                    //Se l'invio è corretto
+                        //Se l'invio è corretto
+                        Intent i = new Intent(getApplicationContext(), MenuPrincipale.class);
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(FaiMulta.this, "Mancano campi o hai inserito una targa troppo grande", Toast.LENGTH_LONG).show();
+                    }
+                }else{
                     Intent i = new Intent(getApplicationContext(), MenuPrincipale.class);
                     startActivity(i);
-                } else {
-                    Toast.makeText(FaiMulta.this, "Targa inserita errata", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -164,7 +184,10 @@ public class FaiMulta extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 ora = selectedHour;
                 minuti = selectedMinute;
-                timeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", ora, minuti));
+
+                orario = String.format(Locale.getDefault(), "%02d:%02d", ora, minuti);
+
+                timeButton.setText(orario);
             }
         };
 
